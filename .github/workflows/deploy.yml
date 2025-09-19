@@ -17,6 +17,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Preflight – ensure required secrets are present
+        run: |
+          test -n "${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}" || { echo "Missing secret: GCP_WORKLOAD_IDENTITY_PROVIDER"; exit 1; }
+          test -n "${{ secrets.GCP_SERVICE_ACCOUNT }}" || { echo "Missing secret: GCP_SERVICE_ACCOUNT"; exit 1; }
+          test -n "${{ secrets.GCP_PROJECT_ID }}" || { echo "Missing secret: GCP_PROJECT_ID"; exit 1; }
+          echo "✅ All required secrets are present."
+
       - name: Auth to Google Cloud (OIDC)
         uses: google-github-actions/auth@v2
         with:
