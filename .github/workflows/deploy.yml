@@ -1,9 +1,10 @@
+
 name: Deploy to Cloud Run
 
 on:
-  workflow_dispatch:
   push:
     branches: [ "main" ]
+  workflow_dispatch:
 
 permissions:
   id-token: write
@@ -12,9 +13,8 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Auth to Google Cloud (OIDC)
@@ -29,64 +29,12 @@ jobs:
       - name: Set project
         run: gcloud config set project solar-safeguard-472521-a1
 
-      - name: Show auth state
+      - name: Deploy KindCompanion API
         run: |
-          echo "== gcloud version ==" && gcloud --version
-          echo "== Active account ==" && gcloud auth list --filter=status:ACTIVE --format="value(account)"
-
-      - name: Show repository layout
-        run: |
-          echo "== Top level =="
-          ls -la
-          echo "== backend =="
-          [ -d backend ] && ls -la backend || echo "no backend dir"
-          echo "== backend/src =="
-          [ -d backend/src ] && ls -la backend/src || echo "no backend/src dir"
-          echo "== Key files =="
-          [ -f Dockerfile ] && echo "Dockerfile at repo root" || true
-          [ -f package.json ] && echo "package.json at repo root" || true
-          [ -f backend/Dockerfile ] && echo "Dockerfile in backend/" || true
-          [ -f backend/package.json ] && echo "package.json in backend/" || true
-          [ -f backend/src/package.json ] && echo "package.json in backend/src/" || true
-
-      - name: Smoke deploy (hello)
-        run: |
-          set -euxo pipefail
-          gcloud run deploy kindcompanion-ci-smoke \
-            --image gcr.io/cloudrun/hello \
+          gcloud run deploy kindcompanion-api \
+            --source ./backend \
             --region europe-west2 \
             --allow-unauthenticated \
             --quiet
-          echo "Smoke URL:"
-          gcloud run services describe kindcompanion-ci-smoke --region europe-west2 --format='value(status.url)'
-
-      - name: Choose app source path
-        id: choosepath
-        shell: bash
-        run: |
-          set -e
-          SRC=""
-          if [ -d "./backend" ] && [ -f "./backend/package.json" -o -f "./backend/Dockerfile" ]; then
-            SRC="./backend"
-          elif [ -d "./backend/src" ] && [ -f "./backend/src/package.json" -o -f "./backend/src/Dockerfile" ]; then
-            SRC="./backend/src"
-          elif [ -f "./package.json" -o -f "./Dockerfile" ]; then
-            SRC="."
-          else
-            echo "No obvious build source found. Add a Dockerfile or package.json to repo root, backend/, or backend/src."
-            echo "::error::Missing build files (Dockerfile/package.json)."
-            exit 1
-          fi
-          echo "Using source path: $SRC"
-          echo "src=$SRC" >> "$GITHUB_OUTPUT"
-
-      - name: Deploy KindCompanion API
-        run: |
-          set -euxo pipefail
-          gcloud run deploy kindcompanion-api \
-            --source "${{ steps.choosepath.outputs.src }}" \
-            --region europe-west2 \
-            --allow-unauthenticated \
-            --verbosity=info
           echo "Service URL:"
           gcloud run services describe kindcompanion-api --region europe-west2 --format='value(status.url)'
