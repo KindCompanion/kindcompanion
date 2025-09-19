@@ -1,0 +1,41 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Auth to Google Cloud (OIDC)
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/387754905624/locations/global/workloadIdentityPools/github-oidc/providers/github
+          service_account: kc-deployer@solar-safeguard-472521-a1.iam.gserviceaccount.com
+
+      - name: Setup gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Set project
+        run: gcloud config set project solar-safeguard-472521-a1
+
+      # If your app code is under ./backend, keep --source ./backend.
+      # If it's at repo root, change to --source .
+      - name: Deploy KindCompanion API
+        run: |
+          gcloud run deploy kindcompanion-api \
+            --source ./backend \
+            --region europe-west2 \
+            --allow-unauthenticated \
+            --quiet
+          echo "Service URL:"
+          gcloud run services describe kindcompanion-api --region europe-west2 --format='value(status.url)'
