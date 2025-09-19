@@ -1,7 +1,0 @@
-[[headers]]
-for = "/*"
-[headers.values]
-Content-Security-Policy = "default-src 'self'; frame-ancestors 'none'; script-src 'self'; object-src 'none'; base-uri 'self';"
-X-Content-Type-Options = "nosniff"
-X-Frame-Options = "DENY"
-Referrer-Policy = "strict-origin-when-cross-origin"
