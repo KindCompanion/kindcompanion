@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360">
+  <rect width="1200" height="360" fill="#F6FAF8"/>
+  <g transform="translate(160,180)"><defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#00C389"/><stop offset="100%" stop-color="#00AA7B"/></linearGradient></defs>
+    <path d="M-120-30c0-55 45-90 92-72 12 5 22 13 28 22 6-9 16-17 28-22 47-18 92 17 92 72 0 68-68 110-120 138-52-28-120-70-120-138z" fill="url(#g2)"/>
+    <circle cx="-32" cy="-12" r="10" fill="#fff"/><circle cx="32" cy="-12" r="10" fill="#fff"/>
+    <path d="M-50,16 a50,40 0 0 0 100,0" fill="#fff" opacity=".9"/></g>
+  <text x="330" y="200" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="800" font-size="64" fill="#0B1211">KindCompanion</text>
+  <text x="330" y="245" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="28" fill="#3A4A44">Your caring AI companion on WhatsApp</text></svg>

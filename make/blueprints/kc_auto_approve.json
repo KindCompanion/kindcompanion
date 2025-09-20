@@ -1,0 +1,39 @@
+{
+  "name": "KC \u2013 Auto Approve",
+  "description": "Promotes high-priority auto issues by labeling 'approved'.",
+  "triggers": [
+    {
+      "type": "github.watch_issues",
+      "repo": "kindcompanion"
+    }
+  ],
+  "steps": [
+    {
+      "action": "tools.regex",
+      "source": "{{issue.body}}",
+      "pattern": "(\\{[\\s\\S]*\\})",
+      "var": "raw_json"
+    },
+    {
+      "action": "json.parse",
+      "source_var": "raw_json",
+      "var": "spec"
+    },
+    {
+      "if": {
+        "equals": [
+          "{{lower(spec.priority)}}",
+          "high"
+        ]
+      },
+      "then": [
+        {
+          "action": "github.add_labels",
+          "labels": [
+            "approved"
+          ]
+        }
+      ]
+    }
+  ]
+}

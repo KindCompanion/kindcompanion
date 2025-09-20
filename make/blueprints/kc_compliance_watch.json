@@ -1,0 +1,32 @@
+{
+  "name": "KC \u2013 Compliance Watch",
+  "description": "Monitors policy sites, proposes wording, commits to repo and emails proof.",
+  "triggers": [
+    {
+      "type": "schedule",
+      "every": "daily"
+    }
+  ],
+  "steps": [
+    {
+      "action": "http.get",
+      "url": "https://ico.org.uk/rss/"
+    },
+    {
+      "action": "openai.chat",
+      "prompt": "Detect changes that affect privacy. Draft additive policy clause with date."
+    },
+    {
+      "action": "github.commit",
+      "repo": "kindcompanion",
+      "path": "privacy.html",
+      "append": "<!-- {{date}} --> {{clause}}"
+    },
+    {
+      "action": "email.send",
+      "to": "support@kindcompanion.chat",
+      "subject": "Compliance Update",
+      "body": "{{clause}}"
+    }
+  ]
+}

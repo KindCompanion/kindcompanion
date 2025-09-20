@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KindCompanion — Your caring AI companion on WhatsApp</title>
+<link rel="icon" href="/assets/favicons/favicon.ico">
+<meta name="description" content="Supportive, friendly check-ins and practical guidance — right where you already chat.">
+<style>
+  :root { --brand: #00C389; --brand2: #003366; --ink:#0B1211; --bg:#F6FAF8; }
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,Segoe UI,Inter,Roboto,Arial,sans-serif;line-height:1.6}
+  .wrap{max-width:1040px;margin:0 auto;padding:24px} header{display:flex;gap:16px;align-items:center;padding:24px 0}
+  header img{height:48px} .hero{display:grid;grid-template-columns:1.2fr 0.8fr;gap:24px;align-items:center;padding:24px 0 8px}
+  .card{background:#fff;border:1px solid #e7efe9;border-radius:16px;box-shadow:0 10px 28px rgba(0,0,0,.06);padding:24px}
+  h1{margin:0 0 12px;line-height:1.15;font-size:42px} p.big{font-size:18px;color:#33423E;margin:0 0 16px}
+  .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+  .btn{display:inline-block;background:var(--brand);color:#013527;text-decoration:none;font-weight:800;border-radius:12px;padding:14px 18px;border:2px solid transparent}
+  .btn.sec{background:#fff;border-color:#cfeee6;color:#01503b} .muted{color:#54635E} .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+  @media (max-width:900px){.hero{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><img src="/assets/logo/logo-lockup.svg" alt="KindCompanion logo"></header>
+  <section class="hero">
+    <div class="card">
+      <h1>Your caring AI companion on WhatsApp</h1>
+      <p class="big">Supportive, friendly check-ins and practical guidance — right where you already chat.</p>
+      <div class="cta">
+        <a class="btn" href="/join-weekly" rel="noopener">💚 Join weekly — £1/week</a>
+        <a class="btn sec" href="/join-monthly" rel="noopener">💙 Join monthly — £4/month</a>
+        <a class="btn" href="/start" rel="noopener">💬 Chat on WhatsApp</a>
+      </div>
+      <p class="muted">Payments via Stripe. Cancel anytime.</p>
+      <div class="grid3">
+        <div class="badge">🔒 Privacy-first</div>
+        <div class="badge">🕒 24/7 availability</div>
+        <div class="badge">🇬🇧 UK company • ICO ref A1124300</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">How it works</h3>
+      <ol>
+        <li>Pick a plan (Weekly or Monthly) — secure Stripe Checkout.</li>
+        <li>Say hello on WhatsApp — no app installs.</li>
+        <li>Get daily nudges, kind accountability, and tailored guidance.</li>
+      </ol>
+      <p class="muted">Already subscribed? <a href="/start">Start on WhatsApp</a>.</p>
+    </div>
+  </section>
+  <footer>
+    <div class="muted">
+      © 2025 KindCompanion AI Ltd —
+      <a href="/privacy.html">Privacy</a> • <a href="/terms.html">Terms</a> •
+      <a href="/cookies.html">Cookies</a> • <a href="/press/">Press</a>
+      <br>Primary domain: kindcompanion.chat • Hosting: Netlify • Payments: Stripe • WhatsApp Cloud API
+    </div>
+  </footer>
+</div>
+<script src="/assets/js/consent.js" data-domain="kindcompanion.chat" data-ga-id="G-XXXXXXXX"></script>
+</body>
+</html>

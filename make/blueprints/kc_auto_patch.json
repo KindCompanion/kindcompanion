@@ -1,0 +1,29 @@
+{
+  "name": "KC \u2013 Auto Patch (+JSON helper)",
+  "description": "Fetches AI news feeds, summarizes, proposes patches, opens GitHub issue with RAW JSON.",
+  "triggers": [
+    {
+      "type": "schedule",
+      "every": "6h"
+    }
+  ],
+  "steps": [
+    {
+      "action": "http.get",
+      "url": "https://openai.com/blog/rss"
+    },
+    {
+      "action": "openai.chat",
+      "prompt": "Summarize changes and propose minimal patch in JSON spec."
+    },
+    {
+      "action": "github.create_issue",
+      "repo": "kindcompanion",
+      "title": "Auto patch: {{summary_title}}",
+      "body": "RAW JSON BLOCK:\\n```json\\n{{json_spec}}\\n```",
+      "labels": [
+        "auto"
+      ]
+    }
+  ]
+}

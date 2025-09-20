@@ -1,0 +1,14 @@
+/join-weekly     /.netlify/functions/create-checkout?plan=weekly  302
+/join-monthly    /.netlify/functions/create-checkout?plan=monthly 302
+/start           https://wa.me/447353685036?text=START               302
+
+/success         /thanks.html   301
+/return          /thanks.html   301
+/complete        /thanks.html   301
+
+/privacy         /privacy.html  301
+/terms           /terms.html    301
+/cookies         /cookies.html  301
+/press           /press/        301
+
+https://www.kindcompanion.chat/*   https://kindcompanion.chat/:splat   301

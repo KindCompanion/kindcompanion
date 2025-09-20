@@ -1,0 +1,44 @@
+{
+  "name": "KC \u2013 Stripe Guard",
+  "description": "Logs Stripe events, emails alerts for failures, sends daily digest.",
+  "triggers": [
+    {
+      "type": "webhook",
+      "events": [
+        "checkout.session.completed",
+        "payment_intent.payment_failed",
+        "charge.dispute.created"
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "action": "sheets.append_row",
+      "fields": [
+        "event_type",
+        "amount",
+        "currency",
+        "email",
+        "phone",
+        "created_at"
+      ]
+    },
+    {
+      "if": {
+        "event_type": [
+          "payment_intent.payment_failed",
+          "charge.dispute.created"
+        ]
+      },
+      "then": [
+        {
+          "action": "email.send",
+          "to": "support@kindcompanion.chat",
+          "subject": "Stripe Alert",
+          "body": "{{full_payload}}"
+        }
+      ]
+    }
+  ],
+  "schedule": "hourly"
+}
